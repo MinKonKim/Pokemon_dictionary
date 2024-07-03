@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface PokemonType {
   name: string;
@@ -9,7 +9,8 @@ interface PokemonType {
 }
 
 interface TypeLabelProps {
-  name: string;
+  typeName: string;
+  abilityName?: string;
 }
 
 const pokemonTypes: PokemonType[] = [
@@ -31,22 +32,29 @@ const pokemonTypes: PokemonType[] = [
   { name: "steel", color: "bg-[#adb5bd]", korean_name: "강철" },
   { name: "fairy", color: "bg-[#f06595]", korean_name: "페어리" },
   { name: "normal", color: "bg-[#292626]", korean_name: "노말" },
+  { name: "default", color: "bg-[#46e74b]" },
 ];
 
-function TypeLabel({ name }: TypeLabelProps) {
-  const label = pokemonTypes.find(
-    (t) => t.name === name || t.korean_name === name
-  ) as PokemonType;
-  const [color, setcolor] = useState<string>(label.color);
-  const defaultName = "nomal";
-  if (!label) {
-    return null;
-  }
+function TypeLabel({ typeName, abilityName }: TypeLabelProps) {
+  const [label, setLabel] = useState<PokemonType>({
+    name: "",
+    color: "",
+    korean_name: "",
+  });
+
+  useEffect(() => {
+    setLabel(
+      pokemonTypes.find(
+        (t) => t.name === typeName || t.korean_name === typeName
+      ) as PokemonType
+    );
+  }, [typeName]);
+
   return (
     <div
       className={`${label.color} px-2 py-1.5 rounded-md text-slate-100 font-bold flex items-center justify-center`}
     >
-      <p>{label.korean_name}</p>
+      <p>{abilityName ? abilityName : label.korean_name}</p>
     </div>
   );
 }

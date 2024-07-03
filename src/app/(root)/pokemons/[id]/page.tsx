@@ -55,19 +55,26 @@ const DetailPage = async ({ params }: { params: { id: string } }) => {
             </p>
           </div>
           <div>
-            <p className="flex">
+            <p className="flex items-center">
               타입 :{" "}
               <span className="flex gap-2 mx-2">
                 {types.map((t) => (
-                  <TypeLabel key={t.type.name} name={t.type.name} />
+                  <TypeLabel key={t.type.name} typeName={t.type.name} />
                 ))}
               </span>
             </p>
           </div>
           <div>
-            <p>
-              특성 : <span>{abilities.map((a) => a.ability.korean_name)}</span>
-            </p>
+            <div className="flex gap-2 items-center">
+              특성 :{" "}
+              {abilities.map((a, index) => (
+                <TypeLabel
+                  key={index}
+                  typeName={"default"}
+                  abilityName={a.ability.korean_name}
+                />
+              ))}
+            </div>
           </div>
         </div>
         <div className="w-[25rem] border rounded p-3 border-[#121212]">
