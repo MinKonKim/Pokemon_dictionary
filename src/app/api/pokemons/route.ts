@@ -5,10 +5,14 @@ const TOTAL_POKEMON = 151;
 
 export const GET = async (request: Request) => {
   try {
-    const allPokemonPromises = Array.from(
-      { length: TOTAL_POKEMON },
+    const BATCH_SIZE = 36; // 한 번에 가져올 포켓몬 개수
+    const { searchParams } = new URL(request.url);
+    const startIndex = parseInt(searchParams.get("startIndex") || "1", 10);
+    const endIndex = startIndex + BATCH_SIZE - 1;
+    const batchPokemonPromises = Array.from(
+      { length: endIndex - startIndex + 1 },
       (_, index) => {
-        const id = index + 1;
+        const id = startIndex + index;
         return Promise.all([
           axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`),
           axios.get(`https://pokeapi.co/api/v2/pokemon-species/${id}`),
@@ -16,9 +20,9 @@ export const GET = async (request: Request) => {
       }
     );
 
-    const allPokemonResponses = await Promise.all(allPokemonPromises);
+    const batchPokemonResponses = await Promise.all(batchPokemonPromises);
 
-    const allPokemonData = allPokemonResponses.map(
+    const batchPokemonData = batchPokemonResponses.map(
       ([response, speciesResponse], index) => {
         const koreanName = speciesResponse.data.names.find(
           (name: any) => name.language.name === "ko"
@@ -27,7 +31,7 @@ export const GET = async (request: Request) => {
       }
     );
 
-    return NextResponse.json(allPokemonData);
+    return NextResponse.json(batchPokemonData);
   } catch (error) {
     return NextResponse.json({ error: "Failed to fetch data" });
   }
