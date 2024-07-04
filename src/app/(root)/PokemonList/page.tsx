@@ -2,10 +2,9 @@
 
 import PokemonCard from "@/components/PokemonCard";
 import { useObserver } from "@/hooks/useObserver";
+import { usePokemonInfiniteQuery } from "@/hooks/usePokemonInfiniteQuery";
 import { Pokemon } from "@/type/Pokemon";
 import { Spinner } from "@nextui-org/spinner";
-import { useInfiniteQuery } from "@tanstack/react-query";
-import axios from "axios";
 import Link from "next/link";
 import { useRef } from "react";
 
@@ -13,30 +12,9 @@ function PokemonList() {
   const bottom = useRef<HTMLDivElement>(null);
   const {
     data: pokemonList,
-    error,
     fetchNextPage,
-    hasNextPage,
-    isFetching,
-    isFetchingNextPage,
     status,
-  } = useInfiniteQuery({
-    queryKey: ["pokemonList"],
-    queryFn: async ({ pageParam }) => {
-      const response = await axios.get<Pokemon[]>(
-        `/api/pokemons?startIndex=` + pageParam
-      );
-      console.log(`/api/pokemons?startIndex=` + pageParam);
-      console.log(response.data);
-      return response.data;
-    },
-    initialPageParam: 1,
-    getNextPageParam: (lastPage, allPages, lastPageParam) => {
-      if (lastPage.length === 0) {
-        return undefined;
-      }
-      return lastPageParam + 36;
-    },
-  });
+  } = usePokemonInfiniteQuery();
 
   const onIntersect = ([entry]: IntersectionObserverEntry[]) =>
     entry.isIntersecting && fetchNextPage();
