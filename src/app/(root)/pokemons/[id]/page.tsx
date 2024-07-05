@@ -5,10 +5,8 @@ import axios from "axios";
 import Image from "next/image";
 
 const DetailPage = async ({ params }: { params: { id: string } }) => {
-  const response = await axios.get(
-    `http://localhost:3000/api/pokemons/${params.id}`
-  );
-  const { data } = await response;
+  const URL_BASE = "http://localhost:3000";
+  const { data } = await axios.get(`${URL_BASE}/api/pokemons/${params.id}`);
   const {
     id,
     korean_name,
@@ -29,7 +27,7 @@ const DetailPage = async ({ params }: { params: { id: string } }) => {
   }
   return (
     <div className="bg-[#121212] h-[100vh] flex justify-center items-center ">
-      <div className=" overflow-auto flex flex-col h-[90%] w-[50%] items-center border bg-slate-100 rounded-md  pb-10 ">
+      <div className=" overflow-auto flex flex-col h-[90%] min-w-[600px] items-center border bg-slate-100 rounded-md  pb-10 ">
         <header className="bg-slate-400 w-full p-5 mx-0 drop-shadow-lg">
           <div className=" flex flex-col justify-center items-center">
             <h1 className="font-semibold text-3xl">{korean_name}</h1>
@@ -43,16 +41,14 @@ const DetailPage = async ({ params }: { params: { id: string } }) => {
           height={150}
         />
         <div className="mb-3 flex flex-col gap-1 font-semibold text-xl">
-          <p>
-            이름 : <span>{korean_name}</span>{" "}
-          </p>
+          <div>
+            <p>이름</p> : <span>{korean_name}</span>{" "}
+          </div>
           <div className="flex gap-3">
-            <p>
-              키 :<span>{height}</span>m
-            </p>
-            <p>
+            <div>키:{height / 10}m</div>
+            <div>
               무게 : <span>{weight}kg</span>
-            </p>
+            </div>
           </div>
           <div>
             <p className="flex items-center">

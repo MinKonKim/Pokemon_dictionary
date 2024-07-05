@@ -7,7 +7,7 @@ export const usePokemonInfiniteQuery = () => {
     queryKey: ["pokemonList"],
     queryFn: async ({ pageParam }) => {
       const response = await axios.get<Pokemon[]>(
-        `/api/pokemons?startIndex=` + pageParam
+        "/api/pokemons?startIndex=" + pageParam
       );
       return response.data;
     },

@@ -5,7 +5,7 @@ import TypeLabel from "../TypeLabel";
 
 function PokemonCard({ id, sprites, korean_name, types, ...props }: Pokemon) {
   return (
-    <div className="border rounded-lg p-3 m-2 hover:border-green-400 active:brightness-50">
+    <div className="border bg-[#12121a] rounded-xl p-3 m-2 hover:border-green-400 hover:brightness-90 active:brightness-50">
       <Image
         src={sprites.front_default}
         alt={korean_name}
