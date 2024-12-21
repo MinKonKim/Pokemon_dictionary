@@ -5,7 +5,7 @@ import { Pokemon } from "@/type/Pokemon";
 const TypesSection = ({ types }: { types: Pokemon["types"] }) => (
   <div>
     <p className="flex items-center">
-      타입:{" "}
+      <span className="font-bold">타입 :</span>
       <span className="flex gap-2 mx-2">
         {types.map((t) => (
           <TypeLabel key={t.type.name} typeName={t.type.name} />

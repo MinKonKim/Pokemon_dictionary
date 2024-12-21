@@ -1,4 +1,4 @@
-import TypeLabel from "@/components/TypeLabel";
+import AbilityLabel from "@/components/AbilityLabel/AbilityLabel";
 import { Pokemon } from "@/type/Pokemon";
 
 const AbilitiesSection = ({
@@ -6,17 +6,11 @@ const AbilitiesSection = ({
 }: {
   abilities: Pokemon["abilities"];
 }) => (
-  <div>
-    <div className="flex gap-2 items-center">
-      특성:{" "}
-      {abilities.map((a, index) => (
-        <TypeLabel
-          key={index}
-          typeName={"default"}
-          abilityName={a.ability.korean_name}
-        />
-      ))}
-    </div>
+  <div className="flex gap-2 items-center">
+    <span className="font-bold">속성 :</span>
+    {abilities.map((a, index) => (
+      <AbilityLabel key={index} abilityName={a.ability.korean_name} />
+    ))}
   </div>
 );
 
