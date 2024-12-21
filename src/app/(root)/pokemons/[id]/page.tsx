@@ -50,7 +50,7 @@ const DetailPage = async ({ params }: DetailPageProps) => {
           alt={korean_name}
           width={150}
           height={150}
-          priority
+          loading="lazy"
         />
         <div className="flex flex-col gap-2">
           <StatsSection height={height} weight={weight} />

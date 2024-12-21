@@ -11,8 +11,6 @@ function PokemonCard({ id, sprites, korean_name, types, ...props }: Pokemon) {
         alt={korean_name}
         width={100}
         height={100}
-        loading="lazy"
-        placeholder="blur"
         priority
       />
       <p className="mb-1 font-semibold font-display:swap">{korean_name}</p>
