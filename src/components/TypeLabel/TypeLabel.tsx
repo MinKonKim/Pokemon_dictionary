@@ -10,7 +10,7 @@ const TypeLabel = memo(({ typeName }: TypeLabelProps) => {
 
   return (
     <span
-      className="px-2 py-1.5 rounded-md text-slate-100 font-bold"
+      className={`px-2 py-1.5 rounded-md text-slate-100 font-bold border-solid border-2 `}
       style={{ backgroundColor: pokemonType?.color }}
     >
       {pokemonType?.korean_name}

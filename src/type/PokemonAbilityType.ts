@@ -23,7 +23,7 @@ const pokemonTypes: PokemonType[] = [
   { name: "steel", color: "#adb5bd", korean_name: "강철" },
   { name: "fairy", color: "#f06595", korean_name: "페어리" },
   { name: "normal", color: "#292626", korean_name: "노말" },
-  { name: "default", color: "#46e74b" },
+  { name: "default", color: "#f1f2f2" },
 ];
 
 const pokemonTypeMap = new Map<string, PokemonType>();

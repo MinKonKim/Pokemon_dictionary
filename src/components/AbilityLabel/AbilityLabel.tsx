@@ -6,9 +6,9 @@ interface AbilityLabelProps {
 
 const AbilityLabel = memo(({ abilityName }: AbilityLabelProps) => {
   return (
-    <span className="px-2 py-1 rounded-md font-bold border-2 border-solid border-black">
+    <p className="px-2 py-1 rounded-md font-bold border-2 border-solid border-black">
       {abilityName}
-    </span>
+    </p>
   );
 });
 

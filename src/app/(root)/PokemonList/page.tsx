@@ -5,8 +5,6 @@ import { useObserver } from "@/hooks/useObserver";
 import { usePokemonInfiniteQuery } from "@/hooks/usePokemonInfiniteQuery";
 import { Pokemon } from "@/type/Pokemon";
 import { Spinner } from "@nextui-org/spinner";
-import classNames from "classnames";
-import throttle from "lodash/throttle";
 import Link from "next/link";
 import { useRef } from "react";
 
@@ -16,19 +14,16 @@ function PokemonList() {
     data: pokemonList,
     fetchNextPage,
     status,
+    hasNextPage,
   } = usePokemonInfiniteQuery();
 
-  const onIntersect = throttle(([entry]: IntersectionObserverEntry[]) => {
-    if (entry.isIntersecting) fetchNextPage();
-  }, 300);
+  const onIntersect = ([entry]: IntersectionObserverEntry[]) => {
+    if (entry.isIntersecting && hasNextPage) {
+      fetchNextPage();
+    }
+  };
 
   useObserver({ target: bottom, onIntersect });
-
-  const containerClass = classNames(
-    "mx-0 bg-[#121212]",
-    "text-slate-100 mx-auto grid grid-cols-1",
-    "sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-1"
-  );
 
   if (status === "pending") {
     return (
@@ -62,7 +57,7 @@ function PokemonList() {
       >
         포켓몬 도감
       </h1>
-      <div className={containerClass}>
+      <div className="text-slate-100 mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-1">
         {pokemonData.map((pokemon: Pokemon) => (
           <Link key={pokemon.id} href={`/pokemons/${pokemon.id}`}>
             <PokemonCard {...pokemon} />

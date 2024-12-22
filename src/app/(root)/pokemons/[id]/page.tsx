@@ -46,7 +46,7 @@ const DetailPage = async ({ params }: DetailPageProps) => {
       <div className="overflow-auto flex flex-col h-[90%] min-w-[600px] items-center border bg-slate-100 rounded-md pb-10">
         <Header id={pokemonId} koreanName={korean_name} />
         <Image
-          src={sprites.front_default}
+          src={sprites.other.dream_world.front_default as string}
           alt={korean_name}
           width={150}
           height={150}
