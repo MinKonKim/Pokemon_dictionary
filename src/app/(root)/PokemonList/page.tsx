@@ -1,10 +1,11 @@
 "use client";
 
+import Error from "@/components/common/Error";
+import Loading from "@/components/common/Loading";
 import PokemonCard from "@/components/PokemonCard";
 import { useObserver } from "@/hooks/useObserver";
 import { usePokemonInfiniteQuery } from "@/hooks/usePokemonInfiniteQuery";
 import { Pokemon } from "@/type/Pokemon";
-import { Spinner } from "@nextui-org/spinner";
 import Link from "next/link";
 import { useRef } from "react";
 
@@ -26,25 +27,11 @@ function PokemonList() {
   useObserver({ target: bottom, onIntersect });
 
   if (status === "pending") {
-    return (
-      <div className="flex justify-center items-center h-screen bg-[#121212]">
-        <Spinner
-          label="데이터를 불러오는 중입니다..."
-          size="lg"
-          color="primary"
-        />
-      </div>
-    );
+    return <Loading message="포켓몬 데이터를 가져오고 있습니다." />;
   }
 
   if (status === "error") {
-    return (
-      <div className="flex flex-col items-center justify-center h-screen">
-        <p className="text-xl text-red-500">
-          데이터를 불러오는 데 실패했습니다.
-        </p>
-      </div>
-    );
+    return <Error message="데이터를 가져오는 중 에러가 발생했습니다." />;
   }
 
   const pokemonData = pokemonList?.pages?.flatMap((page) => page) || [];
