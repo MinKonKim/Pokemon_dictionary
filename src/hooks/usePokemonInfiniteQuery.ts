@@ -13,7 +13,7 @@ export const usePokemonInfiniteQuery = () => {
     },
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
-      if (lastPage.length === 0) {
+      if (!lastPage || lastPage.length === 0) {
         return undefined;
       }
       return lastPageParam + 36;

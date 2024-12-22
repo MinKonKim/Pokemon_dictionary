@@ -9,10 +9,27 @@ import TypesSection from "./_components/TypeSection";
 import fetchPokemonData from "./_utils/fetchPokemonData";
 
 // Metadata 설정 (SEO 최적화)
-export const metadata: Metadata = {
-  title: "Pokemon Detail",
-  description: "Detailed view of a Pokemon",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
+  const pokemon = await fetchPokemonData(params.id);
+  if (!pokemon)
+    return {
+      title: "포켓몬 백과사전",
+      description: "포켓몬에 대해 알아보아요.",
+    };
+  return {
+    title: `${pokemon.korean_name} - 포켓몬 백과사전`,
+    description: `${pokemon.korean_name}, its type, stats, and more.`,
+    openGraph: {
+      title: `${pokemon.name} - 포켓몬 백과사전`,
+      description: `${pokemon.name}의 상세 정보.`,
+      images: [pokemon.sprites.front_default],
+    },
+  };
+}
 
 interface DetailPageProps {
   params: { id: string };
@@ -46,7 +63,7 @@ const DetailPage = async ({ params }: DetailPageProps) => {
       <div className="overflow-auto flex flex-col h-[90%] min-w-[600px] items-center border bg-slate-100 rounded-md pb-10">
         <Header id={pokemonId} koreanName={korean_name} />
         <Image
-          src={sprites.other.dream_world.front_default as string}
+          src={sprites.front_default}
           alt={korean_name}
           width={150}
           height={150}
