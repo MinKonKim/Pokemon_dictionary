@@ -4,15 +4,17 @@ import { getPokemonTypeByName } from "@/type/PokemonAbilityType";
 import { Card, CardBody, CardFooter } from "@nextui-org/card";
 import Image from "next/image";
 
-// TODO: Light House 로 체크하기
-// TODO: 카드 선택시 , 일단 디테일 페이지로 넘어가기 구현 가능하면 ㄱ
+function PokemonCard({ id, sprites, korean_name, types }: Pokemon) {
+  // 타입 색상 계산 (재사용 가능한 데이터 처리)
+  const [primaryColor, secondaryColor] = (() => {
+    const primaryType = types[0]?.type.name || "unknown";
+    const secondaryType = types[1]?.type.name || "unknown";
 
-function PokemonCard({ id, sprites, korean_name, types, ...props }: Pokemon) {
-  const primaryType = types[0]?.type.name || "#12121a";
-  const secondaryType = types[1]?.type.name || "#f1f2f2";
+    const primary = getPokemonTypeByName(primaryType)?.color || "#12121a";
+    const secondary = getPokemonTypeByName(secondaryType)?.color || "#f1f2f2";
 
-  const primaryColor = getPokemonTypeByName(primaryType)?.color;
-  const secondaryColor = getPokemonTypeByName(secondaryType)?.color;
+    return [primary, secondary];
+  })();
 
   return (
     <Card
@@ -21,14 +23,18 @@ function PokemonCard({ id, sprites, korean_name, types, ...props }: Pokemon) {
       }}
       className="rounded-xl p-3 m-2 hover:scale-105 transition-transform duration-300 ease-in-out shadow-md hover:shadow-lg flex flex-col items-center"
     >
+      {/* 이미지 섹션 */}
       <CardBody className="overflow-hidden p-0 bg-slate-50 bg-opacity-50 rounded-lg flex items-center">
         <Image
           src={sprites.front_default}
           alt={korean_name}
           width={120}
           height={120}
+          loading="lazy" // Lazy 로딩
         />
       </CardBody>
+
+      {/* 카드 하단 섹션 */}
       <CardFooter className="text-small flex flex-col items-start">
         <p className="mt-2 text-lg font-semibold text-white">{korean_name}</p>
         <TypesSection types={types} />

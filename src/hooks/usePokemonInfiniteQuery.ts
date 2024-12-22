@@ -7,7 +7,7 @@ export const usePokemonInfiniteQuery = () => {
     queryKey: ["pokemonList"],
     queryFn: async ({ pageParam }) => {
       const response = await axios.get<Pokemon[]>(
-        "/api/pokemons?startIndex=" + pageParam
+        `/api/pokemons?startIndex=${pageParam}`
       );
       return response.data;
     },
@@ -16,7 +16,7 @@ export const usePokemonInfiniteQuery = () => {
       if (!lastPage || lastPage.length === 0) {
         return undefined;
       }
-      return lastPageParam + 36;
+      return lastPageParam + 14;
     },
   });
 };
