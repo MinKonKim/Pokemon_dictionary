@@ -51,7 +51,7 @@ function PokemonList() {
           </Link>
         ))}
       </div>
-      <div ref={bottom} />
+      <div ref={bottom} className="h-5" />
     </div>
   );
 }
